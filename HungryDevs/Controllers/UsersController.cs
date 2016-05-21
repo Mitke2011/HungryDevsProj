@@ -13,6 +13,7 @@ namespace HungryDevs.Controllers
         public ActionResult Login()
         {
             return View();
+            strtyryt;
         }
 
         [HttpPost]
