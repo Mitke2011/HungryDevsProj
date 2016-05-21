@@ -21,7 +21,6 @@ namespace HungryDevs.Controllers
             User u = UsersManager.Current.VerifyUserByPassword(usr.UserName, usr.Password);
             if (u != null)
             {
-                UsersManager.Current.currentUser = u;
                 Session["currentUser"] = u;
                 return RedirectToAction("Index");
             }
@@ -32,11 +31,9 @@ namespace HungryDevs.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            //User u = UsersManager.Current.currentUser;
             User u = Session["currentUser"] as User;
-            if (u!=null)
+            if (u != null)
             {
-                //TempData["currentUser"] = string.Format("{0}-{1}", u.FirstName, u.Id);
                 ViewBag.HelloUser = string.Format("{0}-{1}", u.FirstName, u.Id);
                 List<User> colletion = UsersManager.Current.GetAllUsers();
                 return View(colletion);
@@ -46,9 +43,8 @@ namespace HungryDevs.Controllers
 
         public ActionResult Create()
         {
-            //User u = UsersManager.Current.currentUser;
             User u = Session["currentUser"] as User;
-            if (u!=null)
+            if (u != null)
             {
                 ViewBag.HelloUser = string.Format("{0}-{1}", u.FirstName, u.Id);
                 return View();
@@ -97,9 +93,8 @@ namespace HungryDevs.Controllers
         // GET: Users/Edit/5
         public ActionResult Edit(int id)
         {
-            //User u = UsersManager.Current.currentUser;
             User u = Session["currentUser"] as User;
-            if (u!=null)
+            if (u != null)
             {
                 ViewBag.HelloUser = string.Format("{0}-{1}", u.FirstName, u.Id);
                 return View(UsersManager.Current.GetUser(id));
@@ -116,7 +111,7 @@ namespace HungryDevs.Controllers
             {
                 if (string.IsNullOrEmpty(usr.Password) || usr.Password.Equals(Request["Confirm Password"]))
                 {
-                    User u = Session["currentUser"] as User; 
+                    User u = Session["currentUser"] as User;
                     UsersManager.Current.SaveUser(usr);
                     ViewBag.HelloUser = string.Format("{0}-{1}", usr.FirstName, usr.Id);
                     return RedirectToAction("Index");
@@ -132,9 +127,8 @@ namespace HungryDevs.Controllers
         // GET: Users/Delete/5
         public ActionResult Delete(int id)
         {
-            //User u = UsersManager.Current.currentUser;
-            User u = Session["currentUser"] as User; 
-            if (u!=null)
+            User u = Session["currentUser"] as User;
+            if (u != null)
             {
                 ViewBag.HelloUser = string.Format("{0}-{1}", u.FirstName, u.Id);
                 return View(UsersManager.Current.GetUser(id));
@@ -148,7 +142,6 @@ namespace HungryDevs.Controllers
         {
             try
             {
-                //User u = UsersManager.Current.currentUser;
                 User u = Session["currentUser"] as User;
                 ViewBag.HelloUser = string.Format("{0}-{1}", u.FirstName, u.Id);
                 UsersManager.Current.RemoveUser(id);
@@ -162,7 +155,6 @@ namespace HungryDevs.Controllers
 
         public ActionResult Logoff()
         {
-            //UsersManager.Current.currentUser = null;
             Session["currentUser"] = null;
             return RedirectToAction("Index", "Home");
         }

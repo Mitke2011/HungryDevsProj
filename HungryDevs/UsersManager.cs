@@ -10,7 +10,6 @@ namespace HungryDevs
     {
         List<User> collection;
         static UsersManager instance;
-        public User currentUser { get; set; }
         public static UsersManager Current
         {
             get
