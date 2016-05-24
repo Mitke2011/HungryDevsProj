@@ -104,9 +104,7 @@ namespace HungryDevs.Controllers
         {
             User u = Session["currentUser"] as User;
             if (u != null)
-            {                
-                TempData["TransUser"] = UsersManager.Current.GetUser(id);
-                object p = TempData[""];
+            {
                 ViewBag.HelloUser = string.Format("{0}-{1}", u.FirstName, u.Id);
                 return View(UsersManager.Current.GetUser(id));
             }
