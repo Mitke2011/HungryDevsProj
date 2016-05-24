@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using HungryDevs.Models;
 
 namespace HungryDevs.Controllers
 {
@@ -25,6 +26,16 @@ namespace HungryDevs.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult Main()
+        {
+            User u = Session["currentUser"] as User;
+            if (u!=null)
+            {
+                return View("Main");
+            }
+            return RedirectToAction("Login","Users");
         }
     }
 }
