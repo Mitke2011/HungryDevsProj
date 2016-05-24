@@ -58,8 +58,13 @@ namespace HungryDevs.Controllers
         {
             try
             {
-                UsersManager.Current.SaveUser(usr);
-                return RedirectToAction("Index");
+                User u = Session["currentUser"] as User;
+                if (u!=null && !string.IsNullOrEmpty(usr.Password) && usr.Password.Equals(Request["Confirm Password"]))
+                {
+                    UsersManager.Current.SaveUser(usr);
+                    return RedirectToAction("Index");
+                }
+                return View();
             }
             catch
             {
@@ -79,10 +84,14 @@ namespace HungryDevs.Controllers
         {
             try
             {
-                usr.IsAdmin = false;
-                UsersManager.Current.SaveUser(usr);
-                Session["currentUser"] = usr;
-                return RedirectToAction("Index");
+                if (!string.IsNullOrEmpty(usr.Password) && usr.Password.Equals(Request["Confirm Password"]))
+                {
+                    usr.IsAdmin = false;
+                    UsersManager.Current.SaveUser(usr);
+                    Session["currentUser"] = usr;
+                    return RedirectToAction("Index");
+                }
+                return View();
             }
             catch
             {
