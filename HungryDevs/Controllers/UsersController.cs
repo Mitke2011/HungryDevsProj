@@ -22,7 +22,7 @@ namespace HungryDevs.Controllers
             if (u != null)
             {
                 Session["currentUser"] = u;
-                return RedirectToAction("Index");
+                return RedirectToAction("Main","Home");
             }
 
             ViewBag.LoginValidation = "Log in attempt not successfull, please try again.";
@@ -39,6 +39,11 @@ namespace HungryDevs.Controllers
                 return View(colletion);
             }
             return RedirectToAction("Login", "Users");
+        }
+
+        public ActionResult Create(string email)
+        {
+            return View();
         }
 
         public ActionResult Create()

@@ -1,8 +1,23 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Main";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Main</h2>
+<h2>Chose your action.</h2>
+<div class="jumbotron">
+    
+    <h1>@ViewBag.customContent It's lunch time!</h1> 
+   
+    <p class="lead">No matter what kind of developer you are, after a hard coding we all need a substance refill. Step right up and check out today's offer!</p>
+    <p><center><img id="frontPanelImage" src="~/Content/Images/lunchtime-special5.png" /></center></p>
+</div>
+@section AdminMenu
+{
+<div>
+    <ul class="side-menu">
+        <li class="btn btn-default">@Html.ActionLink("Manage Users","Index","Users")</li>
+        <li class="btn btn-default">Manage Products</li>
+    </ul>
+</div>
 
+}
