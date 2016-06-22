@@ -22,7 +22,7 @@ namespace HungryDevs.Controllers
             if (u != null)
             {
                 Session["currentUser"] = u;
-                return RedirectToAction("Index");
+                return RedirectToAction("Main","Home");
             }
 
             ViewBag.LoginValidation = "Log in attempt not successfull, please try again.";
@@ -39,6 +39,11 @@ namespace HungryDevs.Controllers
                 return View(colletion);
             }
             return RedirectToAction("Login", "Users");
+        }
+
+        public ActionResult Create(string email)
+        {
+            return View();
         }
 
         public ActionResult Create()
@@ -58,8 +63,13 @@ namespace HungryDevs.Controllers
         {
             try
             {
-                UsersManager.Current.SaveUser(usr);
-                return RedirectToAction("Index");
+                User u = Session["currentUser"] as User;
+                if (u!=null && !string.IsNullOrEmpty(usr.Password) && usr.Password.Equals(Request["Confirm Password"]))
+                {
+                    UsersManager.Current.SaveUser(usr);
+                    return RedirectToAction("Index");
+                }
+                return View();
             }
             catch
             {
@@ -79,10 +89,14 @@ namespace HungryDevs.Controllers
         {
             try
             {
-                usr.IsAdmin = false;
-                UsersManager.Current.SaveUser(usr);
-                Session["currentUser"] = usr;
-                return RedirectToAction("Index");
+                if (!string.IsNullOrEmpty(usr.Password) && usr.Password.Equals(Request["Confirm Password"]))
+                {
+                    usr.IsAdmin = false;
+                    UsersManager.Current.SaveUser(usr);
+                    Session["currentUser"] = usr;
+                    return RedirectToAction("Index");
+                }
+                return View();
             }
             catch
             {
